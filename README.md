@@ -47,7 +47,7 @@ git submodule add https://github.com/custom_logging custom_logging
 
 ### Cloning your project that contains submodules
 
-Clone the Repository With Submodules:
+Clone the repository With submodules:
 
 ```bash
 git clone --recursive https://github.com/my-project-with-submodules
@@ -55,12 +55,7 @@ git clone --recursive https://github.com/my-project-with-submodules
 
 Remember `--recursive` for submodules.
 
-### If you clone without --recursive
-
-This project uses the `service_common` submodule which needs to be initialized:
-
-`service_common` must be maintained since Python import statements don't work
-work hyphens.
+If you clone without --recursive:
 
 ```bash
 git submodule update --init --recursive
