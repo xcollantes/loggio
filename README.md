@@ -1,6 +1,6 @@
 # Enhanced Logger
 
-A comprehensive logging utility for the Faxion project that provides:
+A comprehensive logging utility for project that provides:
 
 - Timestamp information in logs
 - User ID tracking for authenticated requests
