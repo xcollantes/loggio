@@ -1,6 +1,6 @@
 """Demo the enhanced logger."""
 
-from faxion_common.logger.enhanced_logger import EnhancedLogger, get_logger
+from src.enhanced_logger import EnhancedLogger, get_logger
 
 logging: EnhancedLogger = get_logger(name="logging_test")
 
