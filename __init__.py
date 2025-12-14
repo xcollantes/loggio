@@ -10,5 +10,4 @@ from .enhanced_logger import (
     get_logger,
 )
 
-__version__ = "0.1.0"
-__all__ = ["Colors", "ColoredFormatter", "EnhancedLogger", "get_logger"]
+__all__ = ["ColoredFormatter", "Colors", "EnhancedLogger", "get_logger"]
