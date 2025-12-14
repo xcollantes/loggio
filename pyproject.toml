@@ -29,6 +29,9 @@ classifiers = [
     "Environment :: Console",
 ]
 
+[tool.hatch.version]
+path = "__init__.py"
+
 [project.urls]
 Homepage = "https://github.com/xcollantes/loggio"
 Repository = "https://github.com/xcollantes/loggio"
@@ -37,12 +40,3 @@ Issues = "https://github.com/xcollantes/loggio/issues"
 [tool.hatch.build.targets.wheel.force-include]
 "__init__.py" = "loggio/__init__.py"
 "enhanced_logger.py" = "loggio/enhanced_logger.py"
-
-[tool.hatch.build.targets.sdist]
-include = [
-    "__init__.py",
-    "enhanced_logger.py",
-    "README.md",
-    "LICENSE",
-    "pyproject.toml",
-]
