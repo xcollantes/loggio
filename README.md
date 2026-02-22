@@ -402,7 +402,7 @@ and publishes to PyPI using trusted publishing (no API token required).
 
 1. Merge all changes to `main`
 2. On GitHub, go to **Releases → Draft a new release**
-3. Create a new tag in the format `v1.2.3` (the `v` prefix is stripped automatically)
+3. Create a new tag in the format `YYYY.MM.DD` (e.g. `2025.12.14`)
 4. Publish the release — the workflow triggers and publishes to PyPI
 
 The version in `loggio/__init__.py` is set automatically from the release tag.
