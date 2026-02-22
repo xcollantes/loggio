@@ -32,8 +32,8 @@ jobs:
           VERSION="${GITHUB_REF#refs/tags/}"
           VERSION="${VERSION#v}"
           echo "Setting version to: $VERSION"
-          sed -i "s/__version__ = \".*\"/__version__ = \"$VERSION\"/" src/__init__.py
-          cat src/__init__.py
+          sed -i "s/__version__ = \".*\"/__version__ = \"$VERSION\"/" loggio/__init__.py
+          cat loggio/__init__.py
 
       - name: Build release distributions
         run: |
