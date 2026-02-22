@@ -30,7 +30,7 @@ classifiers = [
 ]
 
 [tool.hatch.version]
-path = "src/__init__.py"
+path = "loggio/__init__.py"
 
 [project.urls]
 Homepage = "https://github.com/xcollantes/loggio"
@@ -44,7 +44,7 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src"]
+packages = ["loggio"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

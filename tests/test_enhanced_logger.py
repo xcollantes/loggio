@@ -11,7 +11,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
-from src.enhanced_logger import (
+from loggio.enhanced_logger import (
     ColoredFormatter,
     Colors,
     EnhancedLogger,
@@ -30,16 +30,16 @@ def reset_singleton():
     EnhancedLogger._initialized = False
 
     # Reset global logger instance.
-    import src.enhanced_logger
+    import loggio.enhanced_logger
 
-    src.enhanced_logger._logger_instance = None
+    loggio.enhanced_logger._logger_instance = None
 
     yield
 
     # Cleanup after test.
     EnhancedLogger._instance = None
     EnhancedLogger._initialized = False
-    src.enhanced_logger._logger_instance = None
+    loggio.enhanced_logger._logger_instance = None
 
 
 @pytest.fixture
@@ -526,7 +526,7 @@ class TestEnhancedLoggerFormatMessage:
 
         # Mock json.dumps to raise a TypeError.
         with patch(
-            "src.enhanced_logger.json.dumps", side_effect=TypeError("Mock JSON error")
+            "loggio.enhanced_logger.json.dumps", side_effect=TypeError("Mock JSON error")
         ):
             result = logger._format_message("Data: %s", (data,), json_format=True)
             assert "JSON FORMAT ERROR" in result
@@ -539,7 +539,7 @@ class TestEnhancedLoggerFormatMessage:
 
         # Mock json.dumps to raise a ValueError.
         with patch(
-            "src.enhanced_logger.json.dumps",
+            "loggio.enhanced_logger.json.dumps",
             side_effect=ValueError("Value error in JSON"),
         ):
             result = logger._format_message("Data: %s", (data,), json_format=True)
