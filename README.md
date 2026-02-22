@@ -401,9 +401,14 @@ created. The workflow sets the version from the release tag, builds the package,
 and publishes to PyPI using trusted publishing (no API token required).
 
 1. Merge all changes to `main`
-2. On GitHub, go to **Releases → Draft a new release**
-3. Create a new tag in the format `YYYY.MM.DD` (e.g. `2025.12.14`)
-4. Publish the release — the workflow triggers and publishes to PyPI
+2. Create and push a tag:
+   ```bash
+   git tag 2025.12.14
+   git push origin 2025.12.14
+   ```
+3. On GitHub, go to **Releases → Draft a new release**
+4. Select the tag you just pushed
+5. Publish the release — the workflow triggers and publishes to PyPI
 
 The version in `loggio/__init__.py` is set automatically from the release tag.
 Do not manually edit `__version__` before releasing.
