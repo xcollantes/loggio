@@ -239,7 +239,7 @@ class EnhancedLogger:
 
     def __init__(
         self,
-        name: str = None,
+        name: str = "loggio",
         level: str = "INFO",
         terminal: bool = True,
         fileout_path: str = "logs/app.log",
@@ -248,11 +248,12 @@ class EnhancedLogger:
         truncate: bool = True,
         use_colors: bool = True,
         timezone: str = None,
+        propagate: bool = False,
     ) -> None:
         """Initialize enhanced logging mechanism.
 
         Args:
-            name: Name of the logger. Default is None.
+            name: Name of the logger. Default is "loggio".
             level: Logging level. Defaults to "INFO".
             fileout_path: Path to output logs.
             terminal: Output log to terminal. Defaults to True.
@@ -263,6 +264,9 @@ class EnhancedLogger:
             use_colors: Whether to use colors in terminal output. Default is True.
             timezone: Timezone to display timestamps in. Can be a string like 'UTC',
                 'US/Pacific', 'Europe/London', etc. Default is None (local time).
+            propagate: Whether to propagate log records to the root logger.
+                Set to True for pytest --log-cli-level compatibility.
+                Default is False.
         """
         # Skip initialization if already initialized.
         if self._initialized:
@@ -277,9 +281,10 @@ class EnhancedLogger:
         self.truncate = truncate
         self.use_colors = use_colors
         self.timezone = timezone
+        self.propagate = propagate
 
         self.logger = logging.getLogger(self.name)
-        self.logger.propagate = False  # Deduplicate default logging.
+        self.logger.propagate = self.propagate
         self.logger.setLevel(self.level)
 
         # Format includes timestamp, level, filename, line number, and message
@@ -329,11 +334,12 @@ class EnhancedLogger:
         truncate: bool = None,
         use_colors: bool = None,
         timezone: str = None,
+        propagate: bool = None,
     ) -> None:
         """Reconfigure the logger instance.
 
         Args:
-            name: Name of the logger. Default is None.
+            name: Name of the logger. Default is None (unchanged).
             level: Logging level. Defaults to None (unchanged).
             fileout_path: Path to output logs.
             terminal: Output log to terminal. Defaults to None (unchanged).
@@ -343,6 +349,8 @@ class EnhancedLogger:
             use_colors: Whether to use colors in terminal output. Default is None (unchanged).
             timezone: Timezone to display timestamps in. Can be a string like 'UTC',
                 'US/Pacific', 'Europe/London', etc. Default is None (unchanged).
+            propagate: Whether to propagate log records to the root logger.
+                Default is None (unchanged).
         """
         # Update only specified parameters
         if name is not None:
@@ -362,6 +370,9 @@ class EnhancedLogger:
             self.truncate = truncate
         if use_colors is not None:
             self.use_colors = use_colors
+        if propagate is not None:
+            self.propagate = propagate
+            self.logger.propagate = self.propagate
         if timezone is not None:
             self.timezone = timezone
 
@@ -634,7 +645,7 @@ _logger_instance = None
 
 # Create a factory function to get a logger with authentication context.
 def get_logger(
-    name: str = None,
+    name: str = "loggio",
     level: str = "INFO",
     terminal: bool = True,
     json_format: bool = False,
@@ -643,6 +654,7 @@ def get_logger(
     fileout_path: str = None,
     use_colors: bool = True,
     timezone: str = None,
+    propagate: bool = False,
 ) -> EnhancedLogger:
     """Get or create the singleton EnhancedLogger instance.
 
@@ -652,7 +664,7 @@ def get_logger(
     the logger will be reconfigured with the new parameters.
 
     Args:
-        name: Name of the logger. Some arbitrary string name. Default is None.
+        name: Name of the logger. Default is "loggio".
         level: Logging level. Defaults to "INFO".
         terminal: Output log to terminal. Defaults to True.
         json_format: Whether to format args as JSON. Default is False.
@@ -664,6 +676,9 @@ def get_logger(
             'US/Pacific', 'Europe/London', etc. Default is None (local time).
             Examples: 'UTC', 'US/Pacific', 'US/Eastern', 'Europe/London',
             'Asia/Tokyo', 'Australia/Sydney'.
+        propagate: Whether to propagate log records to the root logger.
+            Set to True for pytest --log-cli-level compatibility.
+            Default is False.
     Returns:
         The singleton EnhancedLogger instance.
     """
@@ -681,6 +696,7 @@ def get_logger(
             use_colors=use_colors,
             fileout_path=fileout_path,
             timezone=timezone,
+            propagate=propagate,
         )
     else:
         # Subsequent calls: reconfigure if parameters are provided
@@ -694,6 +710,7 @@ def get_logger(
             use_colors=use_colors,
             fileout_path=fileout_path,
             timezone=timezone,
+            propagate=propagate,
         )
 
     return _logger_instance

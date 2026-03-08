@@ -332,7 +332,7 @@ class TestEnhancedLoggerInit:
         """Test EnhancedLogger initialization with defaults."""
         # Use terminal=False to avoid handler issues in tests.
         logger = EnhancedLogger(terminal=False, fileout_path=None)
-        assert logger.name is None
+        assert logger.name == "loggio"
         assert logger.level == "INFO"
         assert logger.terminal is False
         assert logger.json_format is False
@@ -384,10 +384,17 @@ class TestEnhancedLoggerInit:
         # Should have two handlers.
         assert len(logger.logger.handlers) == 2
 
-    def test_init_sets_propagate_false(self):
-        """Test that logger.propagate is set to False."""
+    def test_init_sets_propagate_false_by_default(self):
+        """Test that logger.propagate is False by default."""
         logger = EnhancedLogger(terminal=False, fileout_path=None)
         assert logger.logger.propagate is False
+
+    def test_init_sets_propagate_true_when_requested(self):
+        """Test that logger.propagate can be set to True."""
+        logger = EnhancedLogger(
+            terminal=False, fileout_path=None, propagate=True
+        )
+        assert logger.logger.propagate is True
 
 
 class TestEnhancedLoggerReconfigure:
